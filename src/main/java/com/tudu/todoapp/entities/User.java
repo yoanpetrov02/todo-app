@@ -16,4 +16,7 @@ public class User {
     @GeneratedValue
     private Long userId;
     private String displayName;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    UserAccount userAccount;
 }
