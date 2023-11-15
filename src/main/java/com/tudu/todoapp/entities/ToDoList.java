@@ -16,4 +16,8 @@ public class ToDoList {
     private Long listId;
     private String title;
     private String description;
+
+    @OneToMany
+    @JoinColumn(name = "board_id")
+    private Board board;
 }

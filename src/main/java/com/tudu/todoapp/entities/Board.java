@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -20,4 +22,7 @@ public class Board {
     @OneToMany
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "todo_list", cascade = CascadeType.ALL)
+    private List<ToDoList> toDoLists;
 }
