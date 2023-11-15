@@ -1,8 +1,8 @@
 spring:
     datasource:
-        url: jdbc:postgresql://localhost:5432/todoappdb
-        username: postgres
-        password: admin
+        url: // your local url
+        username: // your postgres username
+        password: // your postgres password
         driver-class-name: org.postgresql.Driver
     jpa:
         show-sql: false
@@ -17,7 +17,7 @@ spring:
 application:
     security:
         jwt:
-            secret-key: kVTtXA6aKMiGCUs090HNsKx2nM5d9lU1298jhd12d123fx
+            secret-key: // generate a secret key or use a placeholder when testing
             expiration: 600000
             refresh-token:
                 expiration: 300000
