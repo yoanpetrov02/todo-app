@@ -19,7 +19,7 @@ public class Board {
     private String title;
     private String description;
 
-    @OneToMany(mappedBy = "boards", cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL)

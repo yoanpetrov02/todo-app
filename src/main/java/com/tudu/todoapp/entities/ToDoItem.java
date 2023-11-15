@@ -16,6 +16,6 @@ public class ToDoItem {
     private Long itemId;
     private Boolean completed;
 
-    @OneToMany(mappedBy = "toDoItems", cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     private ToDoList toDoList;
 }

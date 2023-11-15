@@ -20,7 +20,7 @@ public class User {
     private Long userId;
     private String displayName;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     UserAccount userAccount;
 
     @OneToMany(cascade = CascadeType.ALL)

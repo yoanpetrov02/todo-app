@@ -19,7 +19,7 @@ public class ToDoList {
     private String title;
     private String description;
 
-    @OneToMany(mappedBy = "toDoLists", cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     private Board board;
 
     @OneToMany(cascade = CascadeType.ALL)
