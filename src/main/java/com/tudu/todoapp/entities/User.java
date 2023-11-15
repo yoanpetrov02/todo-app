@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+import java.util.Set;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -19,4 +22,7 @@ public class User {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     UserAccount userAccount;
+
+    @OneToMany(mappedBy = "board")
+    private List<Board> boardSet;
 }

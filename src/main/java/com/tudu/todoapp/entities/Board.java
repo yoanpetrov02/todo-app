@@ -16,4 +16,8 @@ public class Board {
     private Long boardId;
     private String title;
     private String description;
+
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private User user;
 }
