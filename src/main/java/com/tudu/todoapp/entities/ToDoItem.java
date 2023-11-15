@@ -15,4 +15,8 @@ public class ToDoItem {
     @GeneratedValue
     private Long itemId;
     private Boolean completed;
+
+    @OneToMany
+    @JoinColumn(name = "list_id")
+    private ToDoList toDoList;
 }
