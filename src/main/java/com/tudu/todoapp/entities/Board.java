@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="users")
-public class Users {
-
+@Table(name="boards")
+public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
-    private String displayName;
+    private Long boardId;
+    private String title;
+    private String description;
 }

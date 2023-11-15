@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="user_accounts")
-public class UserAccounts {
+public class UserAccount {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long accountId;
+    private Long accountId;
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)
