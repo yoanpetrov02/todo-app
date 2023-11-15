@@ -1,3 +1,5 @@
+!! Replace the commented values with your own values to make the app work. As this file contains sensitive information, this information should not be committed to the repository. The following yml settings should be in the application.yml file in the same directory in the project.
+
 spring:
     datasource:
         url: // your local url
