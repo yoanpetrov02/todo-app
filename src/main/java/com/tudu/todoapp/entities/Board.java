@@ -21,9 +21,9 @@ public class Board {
     private String description;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "list_id")
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<ToDoList> toDoLists;
 }

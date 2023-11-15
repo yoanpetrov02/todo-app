@@ -24,7 +24,6 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     UserAccount userAccount;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "board_id")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Board> boards;
 }

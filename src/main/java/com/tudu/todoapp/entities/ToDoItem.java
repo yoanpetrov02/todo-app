@@ -18,5 +18,6 @@ public class ToDoItem {
     private Boolean completed;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "list_id")
     private ToDoList toDoList;
 }
