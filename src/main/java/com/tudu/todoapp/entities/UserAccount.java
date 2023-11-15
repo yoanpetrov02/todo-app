@@ -1,5 +1,6 @@
 package com.tudu.todoapp.entities;
 
+import com.tudu.todoapp.security.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,9 +15,14 @@ public class UserAccount {
 
     @Id
     @GeneratedValue
+    @Column(name = "account_id")
     private Long accountId;
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)
-    private String role;
+    private Role role;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
 }

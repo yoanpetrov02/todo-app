@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -13,7 +15,15 @@ import lombok.NoArgsConstructor;
 public class Board {
     @Id
     @GeneratedValue
+    @Column(name = "board_id")
     private Long boardId;
     private String title;
     private String description;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    private List<ToDoList> toDoLists;
 }
