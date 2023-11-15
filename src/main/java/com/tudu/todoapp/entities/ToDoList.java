@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Table(name="todo_lists")
 public class ToDoList {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long listId;
     private String title;
     private String description;

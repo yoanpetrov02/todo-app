@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Table(name="boards")
 public class Board {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long boardId;
     private String title;
     private String description;
