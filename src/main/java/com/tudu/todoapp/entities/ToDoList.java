@@ -19,10 +19,10 @@ public class ToDoList {
     private String title;
     private String description;
 
-    @OneToMany
-    @JoinColumn(name = "board_id")
+    @OneToMany(mappedBy = "toDoLists", cascade = CascadeType.ALL)
     private Board board;
 
-    @OneToMany(mappedBy = "todo_items", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "item_id")
     private List<ToDoItem> toDoItems;
 }

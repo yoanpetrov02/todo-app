@@ -19,10 +19,10 @@ public class Board {
     private String title;
     private String description;
 
-    @OneToMany
-    @JoinColumn(name = "user_id")
+    @OneToMany(mappedBy = "boards", cascade = CascadeType.ALL)
     private User user;
 
-    @OneToMany(mappedBy = "todo_list", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "list_id")
     private List<ToDoList> toDoLists;
 }

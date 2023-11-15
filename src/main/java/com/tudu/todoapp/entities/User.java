@@ -23,6 +23,7 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     UserAccount userAccount;
 
-    @OneToMany(mappedBy = "board")
-    private List<Board> boardSet;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "board_id")
+    private List<Board> boards;
 }
