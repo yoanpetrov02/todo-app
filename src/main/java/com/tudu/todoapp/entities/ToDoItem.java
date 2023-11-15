@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class ToDoItem {
     @Id
     @GeneratedValue
+    @Column(name = "item_id")
     private Long itemId;
     private Boolean completed;
 

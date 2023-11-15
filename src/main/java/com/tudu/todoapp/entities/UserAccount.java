@@ -15,6 +15,7 @@ public class UserAccount {
 
     @Id
     @GeneratedValue
+    @Column(name = "account_id")
     private Long accountId;
     private String email;
     private String password;

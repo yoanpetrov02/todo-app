@@ -15,6 +15,7 @@ import java.util.List;
 public class ToDoList {
     @Id
     @GeneratedValue
+    @Column(name = "list_id")
     private Long listId;
     private String title;
     private String description;
