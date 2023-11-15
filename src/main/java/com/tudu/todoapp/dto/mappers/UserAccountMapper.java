@@ -1,7 +1,7 @@
-package com.tudu.todoapp.rest.mappers;
+package com.tudu.todoapp.dto.mappers;
 
 import com.tudu.todoapp.entities.UserAccount;
-import com.tudu.todoapp.rest.dto.UserAccountDto;
+import com.tudu.todoapp.dto.UserAccountDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.springframework.stereotype.Component;
