@@ -4,7 +4,7 @@ The following yml settings should be in the application.yml file in the same dir
 
 spring:
     datasource:
-        url: // your local url
+        url: // jdbc:postgresql://localhost:5432/<name_of_local_db>
         username: // your postgres username
         password: // your postgres password
         driver-class-name: org.postgresql.Driver
