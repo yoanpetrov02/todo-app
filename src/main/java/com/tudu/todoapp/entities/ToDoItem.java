@@ -17,6 +17,7 @@ public class ToDoItem {
     @GeneratedValue
     @Column(name = "item_id")
     private Long itemId;
+    @Column(name = "completed")
     private Boolean completed;
 
     @ManyToOne(cascade = CascadeType.ALL)

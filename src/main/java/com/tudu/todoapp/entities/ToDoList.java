@@ -19,7 +19,9 @@ public class ToDoList {
     @GeneratedValue
     @Column(name = "list_id")
     private Long listId;
+    @Column(name = "title")
     private String title;
+    @Column(name = "description")
     private String description;
 
     @ManyToOne(cascade = CascadeType.ALL)

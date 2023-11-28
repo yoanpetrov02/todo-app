@@ -19,8 +19,11 @@ public class UserAccount {
     @GeneratedValue
     @Column(name = "account_id")
     private Long accountId;
+    @Column(name = "email")
     private String email;
+    @Column(name = "password")
     private String password;
+    @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private Role role;
 
