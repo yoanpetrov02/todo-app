@@ -23,7 +23,8 @@ public class User {
     private Long userId;
     private String displayName;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_id")
     UserAccount userAccount;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

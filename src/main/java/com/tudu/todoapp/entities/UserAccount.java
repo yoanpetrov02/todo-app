@@ -24,7 +24,6 @@ public class UserAccount {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @OneToOne(mappedBy = "userAccount", cascade = CascadeType.ALL)
     private User user;
 }
