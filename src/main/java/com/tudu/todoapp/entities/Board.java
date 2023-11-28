@@ -29,5 +29,5 @@ public class Board {
     private User user;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
-    private List<ToDoList> toDoLists;
+    private List<TodoList> todoLists;
 }

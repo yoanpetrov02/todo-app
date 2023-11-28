@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="todo_lists")
-public class ToDoList {
+public class TodoList {
     @Id
     @GeneratedValue
     @Column(name = "list_id")
@@ -28,6 +28,6 @@ public class ToDoList {
     @JoinColumn(name = "board_id")
     private Board board;
 
-    @OneToMany(mappedBy = "toDoList", cascade = CascadeType.ALL)
-    private List<ToDoItem> toDoItems;
+    @OneToMany(mappedBy = "todoList", cascade = CascadeType.ALL)
+    private List<TodoItem> todoItems;
 }

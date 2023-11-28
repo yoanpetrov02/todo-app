@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="todo_items")
-public class ToDoItem {
+public class TodoItem {
     @Id
     @GeneratedValue
     @Column(name = "item_id")
@@ -22,5 +22,5 @@ public class ToDoItem {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "list_id")
-    private ToDoList toDoList;
+    private TodoList todoList;
 }
