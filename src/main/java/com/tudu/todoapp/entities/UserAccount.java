@@ -19,12 +19,14 @@ public class UserAccount {
     @GeneratedValue
     @Column(name = "account_id")
     private Long accountId;
+    @Column(name = "email")
     private String email;
+    @Column(name = "password")
     private String password;
+    @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @OneToOne(mappedBy = "userAccount", cascade = CascadeType.ALL)
     private User user;
 }

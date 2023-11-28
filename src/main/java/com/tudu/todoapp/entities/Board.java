@@ -19,7 +19,9 @@ public class Board {
     @GeneratedValue
     @Column(name = "board_id")
     private Long boardId;
+    @Column(name = "title")
     private String title;
+    @Column(name = "description")
     private String description;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -27,5 +29,5 @@ public class Board {
     private User user;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
-    private List<ToDoList> toDoLists;
+    private List<TodoList> todoLists;
 }
