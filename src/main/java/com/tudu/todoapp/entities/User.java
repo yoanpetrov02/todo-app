@@ -20,7 +20,7 @@ public class User {
     @GeneratedValue
     @Column(name = "user_id")
     private Long userId;
-    @Column(name = "display_name", unique = true)
+    @Column(name = "display_name")
     private String displayName;
 
     @OneToOne(cascade = CascadeType.ALL)
