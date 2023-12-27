@@ -9,6 +9,5 @@ import org.springframework.stereotype.Component;
 @Component
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface UserAccountMapper {
-
     UserAccount dtoToEntity(UserAccountDto dto);
 }
