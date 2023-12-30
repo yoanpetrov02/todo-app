@@ -7,7 +7,6 @@ import java.util.Optional;
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Long> {
 
-    boolean existsBoardById(Long id);
-    Optional<Board> findBoardById(Long id);
+
 
 }

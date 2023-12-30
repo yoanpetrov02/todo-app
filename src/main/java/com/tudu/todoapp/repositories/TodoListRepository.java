@@ -6,6 +6,5 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 @Repository
 public interface TodoListRepository extends JpaRepository<TodoList, Long> {
-    boolean existsTodoListById(Long id);
-    Optional<TodoList> findTodoListById(Long id);
+
 }

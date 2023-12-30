@@ -7,6 +7,5 @@ import java.util.Optional;
 
 @Repository
 public interface TodoItemRepository extends JpaRepository<TodoItem, Long> {
-    boolean existsTodoItemById(Long id);
-    Optional<TodoItem> findTodoItemById(Long id);
+
 }
