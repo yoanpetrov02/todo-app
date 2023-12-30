@@ -27,4 +27,18 @@ public class UserAccountController {
 
         return new ResponseEntity<>("api/v1/accounts/" + createdAccount.getAccountId(), HttpStatus.OK);
     }
+
+    @GetMapping("/find")
+    public ResponseEntity<?> findUserAccountByEmail(String email) {
+
+        Optional<UserAccount> userAccount = userAccountService.findUserAccountByEmail(email);
+
+        if(userAccount.isEmpty()) {
+            ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(userAccount.get());
+
+    }
+
 }

@@ -19,4 +19,8 @@ public class UserAccountService {
     public UserAccount createUserAccount(UserAccount userAccount) {
         return testAccount; // account creation logic
     }
+
+    public Optional<UserAccount> findUserAccountByEmail(String email) {
+        return userRepository.findUserAccountByEmail(email);
+    }
 }

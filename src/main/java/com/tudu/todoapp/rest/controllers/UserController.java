@@ -42,4 +42,17 @@ public class UserController {
         return new ResponseEntity<>("User has been successfully deleted", HttpStatus.OK);
    }
 
+
+   @GetMapping("/find")
+   public ResponseEntity<?> findUserByDisplayName(String displayName) {
+
+        Optional<User> user = userService.findUserByDisplayName(displayName);
+
+        if(user.isEmpty()) {
+            ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(user.get());
+   }
+
 }

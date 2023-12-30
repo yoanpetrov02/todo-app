@@ -105,4 +105,8 @@ public class UserService {
         }
         userRepository.deleteById(userId);
     }
+
+    public Optional<User> findUserByDisplayName(String displayName) {
+        return userRepository.findUserByDisplayName(displayName);
+    }
 }
