@@ -52,7 +52,7 @@ public interface BoardService {
      * @return the updated {@code Board}.
      * @throws ResourceNotFoundException if the board was not found.
      */
-    Board updateBoard(Long boardId, User newData) throws ResourceNotFoundException;
+    Board updateBoard(Long boardId, Board newData) throws ResourceNotFoundException;
 
     /**
      * Deletes all boards from the database.
