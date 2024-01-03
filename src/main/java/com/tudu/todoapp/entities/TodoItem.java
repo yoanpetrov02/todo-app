@@ -24,4 +24,6 @@ public class TodoItem {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "list_id")
     private TodoList todoList;
+
+
 }
