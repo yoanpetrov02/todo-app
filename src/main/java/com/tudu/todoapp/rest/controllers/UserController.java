@@ -20,12 +20,31 @@ public class UserController {
         return new ResponseEntity<>("created yea", HttpStatus.OK);
     }
 
+
+
+
+
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User newData) {
         return new ResponseEntity<>(userService.updateUser(id, newData), HttpStatus.OK);
     }
 
 
+    @PostMapping("/save")
+    public User persistUser(String displayName, UserAccount userAccount, List<Board> boards) {
+
+        Optional<User> userOptional = userService.findUserByDisplayName(displayName)
+                .orElse(new User(displayName, userAccount, boards));
+
+        User user = userOptional.get();
+
+        if(user.getUserId() != null) {
+            user.setUserAccount(userAccount);
+            user.setBoards(boards);
+        }
+
+        return userService.save(user);
+    }
 
     @DeleteMapping
     public ResponseEntity<?> deleteAllUsers() {
@@ -55,4 +74,9 @@ public class UserController {
         return ResponseEntity.ok(user.get());
    }
 
+
+   @GetMapping("/filter")
+   public List<User> filterUsers(String displayName) {
+        return userService.filterUsers(displayName.toLowerCase());
+   }
 }

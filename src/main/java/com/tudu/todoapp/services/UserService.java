@@ -109,4 +109,13 @@ public class UserService {
     public Optional<User> findUserByDisplayName(String displayName) {
         return userRepository.findUserByDisplayName(displayName);
     }
+
+    public void save(User user) {
+        return userRepository.save(user);
+    }
+
+
+    public List<User> filterUsers(String displayName) {
+        return userRepository.filterUsersByDisplayName(displayName);
+    }
 }
