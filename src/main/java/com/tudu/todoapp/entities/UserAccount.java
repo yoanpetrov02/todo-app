@@ -39,6 +39,7 @@ public class UserAccount {
 
     public Long getAccountId() {
         return accountId;
+
     }
 
     public String getEmail() {
