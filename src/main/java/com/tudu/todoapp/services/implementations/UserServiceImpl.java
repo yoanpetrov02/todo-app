@@ -1,4 +1,4 @@
-package com.tudu.todoapp.services;
+package com.tudu.todoapp.services.implementations;
 
 import com.tudu.todoapp.entities.User;
 import com.tudu.todoapp.exceptions.ResourceConflictException;
@@ -20,7 +20,7 @@ import java.util.List;
  */
 @RequiredArgsConstructor
 @Service
-public class UserServiceImpl implements UserService {
+class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
