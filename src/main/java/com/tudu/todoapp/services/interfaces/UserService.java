@@ -6,6 +6,9 @@ import com.tudu.todoapp.exceptions.ResourceNotFoundException;
 
 import java.util.List;
 
+/**
+ * Business logic related to {@code User} entities.
+ */
 public interface UserService {
 
     /**

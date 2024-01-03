@@ -4,6 +4,7 @@ import com.tudu.todoapp.entities.User;
 import com.tudu.todoapp.exceptions.ResourceConflictException;
 import com.tudu.todoapp.exceptions.ResourceNotFoundException;
 import com.tudu.todoapp.repositories.UserRepository;
+import com.tudu.todoapp.services.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
@@ -11,38 +12,43 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
- * A service with business logic regarding users.
+ * User Service implementation.
+ * @see UserService
  */
 @RequiredArgsConstructor
 @Service
-public class UserServiceImpl {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
+    @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
+    @Override
     public List<User> getUsersPage(int pageNumber, int perPage) {
         int pageIndex = pageNumber - 1;
         Pageable page = PageRequest.of(pageIndex, perPage);
         return userRepository.findAll(page).toList();
     }
 
+    @Override
     public User getUserById(Long userId) {
         return userRepository.findById(userId)
             .orElseThrow(() -> new ResourceNotFoundException("The user with the specified id was not found."));
     }
 
-    public User getUserByUsername(String displayName) {
+    @Override
+    public User getUserByDisplayName(String displayName) {
         return userRepository.findUserByDisplayName(displayName)
             .orElseThrow(() ->
                 new ResourceNotFoundException("The user with the specified display name was not found."));
     }
 
+    @Override
     public User createUser(User user) {
         if (user.getUserId() != null && userRepository.existsById(user.getUserId())) {
             throw new ResourceConflictException("A user with the same id already exists.");
@@ -50,7 +56,7 @@ public class UserServiceImpl {
         return userRepository.save(user);
     }
 
-
+    @Override
     public User updateUser(Long userId, User newData) {
         try {
             User dbUser = userRepository.findById(userId)
@@ -62,10 +68,12 @@ public class UserServiceImpl {
         }
     }
 
+    @Override
     public void deleteAllUsers() {
         userRepository.deleteAll();
     }
 
+    @Override
     public void deleteUserById(Long userId) {
         if (!userRepository.existsById(userId)) {
             throw new ResourceNotFoundException("The user with the specified id was not found.");
