@@ -19,7 +19,7 @@ import java.util.List;
  */
 @RequiredArgsConstructor
 @Service
-public class BoardServiceImpl implements BoardService {
+class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
 
