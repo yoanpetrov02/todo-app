@@ -1,7 +1,9 @@
-package com.tudu.todoapp.dto.mappers;
+package com.tudu.todoapp.mappers;
 
 import com.tudu.todoapp.dto.UserAccountDto;
+import com.tudu.todoapp.dto.mappers.UserAccountMapper;
 import com.tudu.todoapp.entities.UserAccount;
+import com.tudu.todoapp.security.Role;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -11,6 +13,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+// todo rework this test to use only junit
 class UserAccountMapperTest {
 
     private final UserAccountMapper underTest = Mappers.getMapper(UserAccountMapper.class);
@@ -18,7 +21,7 @@ class UserAccountMapperTest {
     @ParameterizedTest
     @MethodSource("paramProvider")
     void convertDtoToEntityTest(UserAccountDto dto, String[] emptyFields) {
-        UserAccount user = underTest.convertDtoToEntity(dto, 1L);
+        UserAccount user = underTest.dtoToEntity(dto);
         assertThat(user)
             .isNotNull()
             .hasNoNullFieldsOrPropertiesExcept(emptyFields);
