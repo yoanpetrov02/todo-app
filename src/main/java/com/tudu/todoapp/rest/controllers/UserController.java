@@ -1,7 +1,7 @@
 package com.tudu.todoapp.rest.controllers;
 
 import com.tudu.todoapp.entities.User;
-import com.tudu.todoapp.services.UserService;
+import com.tudu.todoapp.services.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
