@@ -1,4 +1,4 @@
-gitpackage com.tudu.todoapp;
+package com.tudu.todoapp;
 
 import org.apache.log4j.BasicConfigurator;
 import org.springframework.boot.SpringApplication;
