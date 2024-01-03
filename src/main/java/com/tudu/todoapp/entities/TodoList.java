@@ -15,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name="todo_lists")
 public class TodoList {
+
     @Id
     @GeneratedValue
     @Column(name = "list_id")

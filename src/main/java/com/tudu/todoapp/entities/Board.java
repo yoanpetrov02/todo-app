@@ -15,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name="boards")
 public class Board {
+
     @Id
     @GeneratedValue
     @Column(name = "board_id")

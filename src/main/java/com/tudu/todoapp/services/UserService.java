@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * A service with business logic regarding users.
@@ -104,5 +105,9 @@ public class UserService {
             throw new ResourceNotFoundException("The user with the specified id was not found.");
         }
         userRepository.deleteById(userId);
+    }
+
+    public Optional<User> findUserByDisplayName(String displayName) {
+        return userRepository.findUserByDisplayName(displayName);
     }
 }

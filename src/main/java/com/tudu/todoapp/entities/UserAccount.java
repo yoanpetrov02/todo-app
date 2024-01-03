@@ -30,3 +30,6 @@ public class UserAccount {
     @OneToOne(mappedBy = "userAccount", cascade = CascadeType.ALL)
     private User user;
 }
+
+
+

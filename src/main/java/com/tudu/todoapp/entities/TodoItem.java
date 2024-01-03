@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name="todo_items")
 public class TodoItem {
+
     @Id
     @GeneratedValue
     @Column(name = "item_id")
