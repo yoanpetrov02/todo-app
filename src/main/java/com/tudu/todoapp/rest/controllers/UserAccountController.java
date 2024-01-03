@@ -7,10 +7,7 @@ import com.tudu.todoapp.services.UserAccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -27,18 +24,4 @@ public class UserAccountController {
 
         return new ResponseEntity<>("api/v1/accounts/" + createdAccount.getAccountId(), HttpStatus.OK);
     }
-
-    @GetMapping("/find")
-    public ResponseEntity<?> findUserAccountByEmail(String email) {
-
-        Optional<UserAccount> userAccount = userAccountService.findUserAccountByEmail(email);
-
-        if(userAccount.isEmpty()) {
-            ResponseEntity.noContent().build();
-        }
-
-        return ResponseEntity.ok(userAccount.get());
-
-    }
-
 }

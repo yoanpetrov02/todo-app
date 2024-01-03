@@ -17,6 +17,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity<?> createUser(@RequestBody User user) {
         userService.createUser(user);
+
         return new ResponseEntity<>("created yea", HttpStatus.OK);
     }
 
@@ -25,34 +26,18 @@ public class UserController {
         return new ResponseEntity<>(userService.updateUser(id, newData), HttpStatus.OK);
     }
 
-
-
     @DeleteMapping
     public ResponseEntity<?> deleteAllUsers() {
         userService.deleteAllUsers();
+
         return new ResponseEntity<>("All users have been successfully deleted", HttpStatus.OK);
     }
 
    @DeleteMapping("/{id}")
    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
-
         User user = userService.getUserById(id);
         userService.deleteUserById(id);
 
         return new ResponseEntity<>("User has been successfully deleted", HttpStatus.OK);
    }
-
-
-   @GetMapping("/find")
-   public ResponseEntity<?> findUserByDisplayName(String displayName) {
-
-        Optional<User> user = userService.findUserByDisplayName(displayName);
-
-        if(user.isEmpty()) {
-            ResponseEntity.noContent().build();
-        }
-
-        return ResponseEntity.ok(user.get());
-   }
-
 }
