@@ -63,7 +63,7 @@ public class ToDoItemController {
         }
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteToDoItemById(@PathVariable Long id){
         Optional<TodoItem> todoItemOptional = todoItemRepository.findById(id);
 
@@ -74,4 +74,12 @@ public class ToDoItemController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteAllToDoItems(){
+        todoItemRepository.deleteAll();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
 }
