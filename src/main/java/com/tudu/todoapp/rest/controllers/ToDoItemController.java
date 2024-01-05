@@ -7,10 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/todoitems")
@@ -30,5 +29,13 @@ public class ToDoItemController {
 
         Page<TodoItem> todoItems = todoItemRepository.findAll(PageRequest.of(page, size));
         return new ResponseEntity<>(todoItems, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TodoItem> getToDoItemById(@PathVariable Long id){
+        Optional<TodoItem> todoItem = todoItemRepository.findById(id);
+
+        return todoItem.map(item -> new ResponseEntity<>(item, HttpStatus.OK))
+            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }
