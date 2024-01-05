@@ -62,4 +62,16 @@ public class ToDoItemController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteToDoItemById(@PathVariable Long id){
+        Optional<TodoItem> todoItemOptional = todoItemRepository.findById(id);
+
+        if(todoItemOptional.isPresent()){
+            todoItemRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }
