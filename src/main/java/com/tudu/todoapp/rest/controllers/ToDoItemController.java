@@ -2,6 +2,7 @@ package com.tudu.todoapp.rest.controllers;
 
 import com.tudu.todoapp.entities.TodoItem;
 import com.tudu.todoapp.repositories.TodoItemRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -37,5 +38,11 @@ public class ToDoItemController {
 
         return todoItem.map(item -> new ResponseEntity<>(item, HttpStatus.OK))
             .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @PostMapping
+    public ResponseEntity<TodoItem> createToDoItem(@Valid @RequestBody TodoItem todoItem){
+        TodoItem createdTodoItem = todoItemRepository.save(todoItem);
+        return new ResponseEntity<>(createdTodoItem, HttpStatus.CREATED);
     }
 }
