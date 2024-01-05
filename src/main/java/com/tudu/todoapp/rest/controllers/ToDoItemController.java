@@ -45,4 +45,21 @@ public class ToDoItemController {
         TodoItem createdTodoItem = todoItemRepository.save(todoItem);
         return new ResponseEntity<>(createdTodoItem, HttpStatus.CREATED);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<TodoItem> updateToDoItem(
+        @PathVariable Long id,
+        @Valid @RequestBody TodoItem updatedToDoItem
+    ){
+        Optional<TodoItem> existingToDoItemOptional = todoItemRepository.findById(id);
+        if(existingToDoItemOptional.isPresent()){
+            TodoItem existingToDoItem = existingToDoItemOptional.get();
+            existingToDoItem.setCompleted(updatedToDoItem.getCompleted());
+
+            TodoItem savedTodoItem = todoItemRepository.save(existingToDoItem);
+            return new ResponseEntity<>(savedTodoItem, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }
