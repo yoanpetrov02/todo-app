@@ -1,7 +1,5 @@
 package com.tudu.todoapp.rest.controllers;
 
-import com.tudu.todoapp.dto.UserAccountDto;
-import com.tudu.todoapp.dto.mappers.UserAccountMapper;
 import com.tudu.todoapp.entities.TodoList;
 
 import com.tudu.todoapp.services.implementations.TodoListServiceImpl;
@@ -9,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
