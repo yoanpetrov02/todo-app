@@ -45,7 +45,7 @@ public class TodoListServiceImpl implements TodoListService {
 
     @Override
     public TodoList createTodoList(TodoList todoList) {
-        if (todoList.getTodoListId() != null && todoListRepository.existsById(todoList.getTodoListId())) {
+        if (todoList.getListId() != null && todoListRepository.existsById(todoList.getListId())) {
             throw new ResourceConflictException("A todo list with the same id already exists.");
         }
         return todoListRepository.save(todoList);

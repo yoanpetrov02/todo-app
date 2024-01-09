@@ -82,7 +82,7 @@ class UserServiceImpl implements UserService {
         userRepository.deleteById(userId);
     }
 
-    public Optional<User> findUserByDisplayName(String displayName) {
+    /*public Optional<User> findUserByDisplayName(String displayName) {
         return userRepository.findUserByDisplayName(displayName);
-    }
+    }*/
 }
