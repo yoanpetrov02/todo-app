@@ -31,4 +31,8 @@ public class TodoList {
 
     @OneToMany(mappedBy = "todoList", cascade = CascadeType.ALL)
     private List<TodoItem> todoItems;
+
+    public TodoList(String title) {
+        this.title = title;
+    }
 }
