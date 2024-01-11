@@ -42,12 +42,12 @@ public interface UserAccountService {
     /**
      * Updates the email of the given account to the new email.
      *
-     * @param userAccountId the id of the user account.
+     * @param oldEmail the current email of the user account.
      * @param newEmail the new email of the account.
      * @return the updated {@code UserAccount}.
      * @throws ResourceNotFoundException if the account was not found.
      */
-    UserAccount updateEmail(Long userAccountId, String newEmail) throws ResourceNotFoundException;
+    UserAccount updateEmail(String oldEmail, String newEmail) throws ResourceNotFoundException;
 
     /**
      * Deletes all user accounts from the database.

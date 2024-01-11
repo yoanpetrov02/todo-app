@@ -46,11 +46,40 @@ public class UserAccountController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/changeEmail")
     public ResponseEntity<?> updateEmail(
-        @PathVariable Long id,
-        @RequestParam(defaultValue = "unknown") String email
+        @RequestParam(defaultValue = "unknown") String email,
+        @RequestParam(defaultValue = "unknown") String newEmail
     ) {
-        return null;
+        if ("unknown".equals(email)) {
+            return new ResponseEntity<>(
+                "Please, provide a value for the current email.", HttpStatus.BAD_REQUEST);
+        }
+        if ("unknown".equals(newEmail)) {
+            return new ResponseEntity<>(
+                "No new email provided, nothing has changed.", HttpStatus.OK);
+        }
+        try {
+            UserAccount updated = userAccountService.updateEmail(email, newEmail);
+            return new ResponseEntity<>(updated, HttpStatus.OK);
+        } catch (ResourceNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/changePassword/{id}")
+    public ResponseEntity<?> updatePassword(
+        @PathVariable Long id,
+        @RequestParam String newPassword
+    ) {
+        if (newPassword == null) {
+            return new ResponseEntity<>("Please, provide a new password", HttpStatus.BAD_REQUEST);
+        }
+        try {
+            UserAccount updated = userAccountService.updatePassword(id, newPassword);
+            return new ResponseEntity<>(updated, HttpStatus.OK);
+        } catch (ResourceNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 }
