@@ -13,7 +13,6 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-// todo rework this test to use only junit
 class UserAccountMapperTest {
 
     private final UserAccountMapper underTest = Mappers.getMapper(UserAccountMapper.class);
@@ -26,7 +25,6 @@ class UserAccountMapperTest {
             .isNotNull()
             .hasNoNullFieldsOrPropertiesExcept(emptyFields);
     }
-
 
     private static Stream<Arguments> paramProvider() {
         return Stream.of(

@@ -13,9 +13,7 @@ class TodoListRepositoryTest {
     @Autowired
     private TodoListRepository todoListRepository;
 
-
     public void testFilterTodoListsByTitle() {
-
         TodoList todoList1 = TodoList.builder().title("First").build();
         TodoList todoList2 = TodoList.builder().title("Second").build();
         TodoList todoList3 = TodoList.builder().title("Third").build();
@@ -23,7 +21,6 @@ class TodoListRepositoryTest {
         todoListRepository.saveAll(List.of(todoList1, todoList2, todoList3));
 
         List<TodoList> filteredLists = todoListRepository.filterTodoListsByTitle("First");
-
         assertEquals(1, filteredLists.size());
         assertEquals("First", filteredLists.get(0).getTitle());
     }
