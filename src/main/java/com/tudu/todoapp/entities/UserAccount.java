@@ -1,5 +1,6 @@
 package com.tudu.todoapp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tudu.todoapp.security.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,6 +25,7 @@ public class UserAccount {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @JsonIgnore
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @OneToOne(mappedBy = "userAccount", cascade = CascadeType.ALL)

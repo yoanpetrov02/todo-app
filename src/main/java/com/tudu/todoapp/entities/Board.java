@@ -1,5 +1,6 @@
 package com.tudu.todoapp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,6 +24,7 @@ public class Board {
     @Column(name = "description")
     private String description;
 
+    @JsonIgnore
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @ManyToMany(cascade = CascadeType.ALL)
@@ -31,6 +33,7 @@ public class Board {
         inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users = new ArrayList<>();
 
+    @JsonIgnore
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
