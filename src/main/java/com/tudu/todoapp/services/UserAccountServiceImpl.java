@@ -3,6 +3,7 @@ package com.tudu.todoapp.services;
 import com.tudu.todoapp.entities.UserAccount;
 import com.tudu.todoapp.repositories.UserAccountRepository;
 import com.tudu.todoapp.security.Role;
+import com.tudu.todoapp.services.interfaces.UserAccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class UserAccountService {
+public class UserAccountServiceImpl implements UserAccountService {
 
     private final UserAccountRepository userAccountRepository;
 
