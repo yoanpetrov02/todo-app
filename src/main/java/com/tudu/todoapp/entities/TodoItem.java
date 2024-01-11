@@ -1,17 +1,14 @@
 package com.tudu.todoapp.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="todo_items")
+@Table(name = "todo_items")
 public class TodoItem {
 
     @Id
@@ -21,6 +18,8 @@ public class TodoItem {
     @Column(name = "completed")
     private Boolean completed;
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "list_id")
     private TodoList todoList;
