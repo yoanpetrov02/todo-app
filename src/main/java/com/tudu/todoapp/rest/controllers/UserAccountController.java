@@ -36,7 +36,7 @@ public class UserAccountController {
         }
     }
 
-    @GetMapping("/{email}")
+    @GetMapping("/email/{email}")
     public ResponseEntity<?> getUserAccountById(@PathVariable String email) {
         try {
             UserAccount userAccount = userAccountService.getUserAccountByEmail(email);

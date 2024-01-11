@@ -39,7 +39,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/username/{username}")
     public ResponseEntity<?> getUserByUsername(@PathVariable String username) {
         try {
             User user = userService.getUserByDisplayName(username);
