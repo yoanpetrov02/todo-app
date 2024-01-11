@@ -1,14 +1,16 @@
-package com.tudu.todoapp.rest.controllers;
+package com.tudu.todoapp.controllers;
 
 import com.tudu.todoapp.entities.TodoList;
+import com.tudu.todoapp.rest.controllers.TodoListController;
 import com.tudu.todoapp.services.implementations.TodoListServiceImpl;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -17,9 +19,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
-
-
-
 
 @WebMvcTest(controllers = TodoListController.class)
 class TodoListControllerTest {
@@ -54,8 +53,8 @@ class TodoListControllerTest {
     @Test
     void testGetTodoListById() {
 
-        Long todoListId = 1;
-        TodoList todoList = new TodoList("First");
+        Long todoListId = 1L;
+        TodoList todoList = TodoList.builder().title("First").build();
 
         when(todoListService.getTodoListById(todoListId)).thenReturn(todoList);
 
@@ -67,7 +66,7 @@ class TodoListControllerTest {
     @Test
     void testCreateTodoList() {
 
-        TodoList todoList = new TodoList("First");
+        TodoList todoList = TodoList.builder().title("First").build();
 
         ResponseEntity<?> actualResult = todoListController.createTodoList(todoList);
         assertEquals(HttpStatus.OK, actualResult.getStatusCode());
@@ -77,9 +76,9 @@ class TodoListControllerTest {
     @Test
     void testUpdateTodoList() {
 
-        Long todoListId = 1;
-        TodoList newData = new TodoList("First");
-        TodoList updatedTodoList = new TodoList("Second");
+        Long todoListId = 1L;
+        TodoList newData = TodoList.builder().title("First").build();
+        TodoList updatedTodoList = TodoList.builder().title("Second").build();
 
         when(todoListService.updateTodoList(todoListId, newData)).thenReturn(updatedTodoList);
 
@@ -102,18 +101,12 @@ class TodoListControllerTest {
     @Test
     void testDeleteTodoListById() {
 
-        Long todoListId = 1;
-        TodoList todoList = new TodoList("First");
+        Long todoListId = 1L;
+        TodoList todoList = TodoList.builder().title("First").build();
 
         when(todoListService.getTodoListById(todoListId)).thenReturn(todoList);
 
         ResponseEntity<?> actualResult = todoListController.deleteTodoListById(todoListId);
         assertEquals(HttpStatus.OK, actualResult.getStatusCode());
     }
-
-    private Page<TodoList> getTodoListPage() {
-        Pageable pageable = PageRequest.of(0, 5);
-        return new PageImpl<TodoList>(List.of(new Employee()), pageable, 1L);
-    }
-
 }

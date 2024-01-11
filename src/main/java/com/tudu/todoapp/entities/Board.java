@@ -1,11 +1,9 @@
 package com.tudu.todoapp.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,7 +11,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="boards")
+@Table(name = "boards")
 public class Board {
 
     @Id
@@ -25,10 +23,16 @@ public class Board {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "users_boards_collaborations",
+        joinColumns = @JoinColumn(name = "board_id"),
+        inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> users = new ArrayList<>();
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
-    private List<TodoList> todoLists;
+    private List<TodoList> todoLists = new ArrayList<>();
 }

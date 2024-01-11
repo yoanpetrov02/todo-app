@@ -1,12 +1,11 @@
-import org.junit.jupiter.api.Test;
+package com.tudu.todoapp.repositories;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.tudu.todoapp.entities.TodoList;
-import com.tudu.todoapp.repositories.TodoListRepository;
-
 
 @SpringBootTest
 class TodoListRepositoryTest {
@@ -17,9 +16,9 @@ class TodoListRepositoryTest {
 
     public void testFilterTodoListsByTitle() {
 
-        TodoList todoList1 = new TodoList("First");
-        TodoList todoList2 = new TodoList("Second");
-        TodoList todoList3 = new TodoList("Third");
+        TodoList todoList1 = TodoList.builder().title("First").build();
+        TodoList todoList2 = TodoList.builder().title("Second").build();
+        TodoList todoList3 = TodoList.builder().title("Third").build();
 
         todoListRepository.saveAll(List.of(todoList1, todoList2, todoList3));
 
@@ -28,8 +27,4 @@ class TodoListRepositoryTest {
         assertEquals(1, filteredLists.size());
         assertEquals("First", filteredLists.get(0).getTitle());
     }
-
 }
-
-
-@ParameterizedTest
