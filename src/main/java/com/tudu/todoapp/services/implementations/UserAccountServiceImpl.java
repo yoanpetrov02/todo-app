@@ -53,8 +53,8 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public UserAccount updateEmail(Long userAccountId, String newEmail) throws ResourceNotFoundException {
-        UserAccount dbAccount = repository.findById(userAccountId)
+    public UserAccount updateEmail(String oldEmail, String newEmail) throws ResourceNotFoundException {
+        UserAccount dbAccount = repository.findUserAccountByEmail(oldEmail)
             .orElseThrow(() -> new ResourceNotFoundException("The user account was not found"));
         dbAccount.setEmail(newEmail);
         return repository.save(dbAccount);
