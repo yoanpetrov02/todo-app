@@ -37,9 +37,13 @@ public class UserAccountServiceImpl implements UserAccountService {
             .orElseThrow(() -> new ResourceNotFoundException("The user account was not found"));
     }
 
+    @Override
     public UserAccount createUserAccount(UserAccount userAccount) {
         if (userAccount.getAccountId() != null && repository.existsById(userAccount.getAccountId())) {
             throw new ResourceConflictException("A user account with the same id already exists.");
+        }
+        if (userAccount.getEmail() != null && repository.findUserAccountByEmail(userAccount.getEmail()).isPresent()) {
+            throw new ResourceConflictException("A user account with the same email already exists");
         }
         return repository.save(userAccount);
     }
@@ -53,11 +57,17 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public UserAccount updateEmail(String oldEmail, String newEmail) throws ResourceNotFoundException {
-        UserAccount dbAccount = repository.findUserAccountByEmail(oldEmail)
-            .orElseThrow(() -> new ResourceNotFoundException("The user account was not found"));
-        dbAccount.setEmail(newEmail);
-        return repository.save(dbAccount);
+    public UserAccount updateEmail(String oldEmail, String newEmail)
+        throws ResourceNotFoundException, ResourceConflictException
+    {
+        try {
+            UserAccount dbAccount = repository.findUserAccountByEmail(oldEmail)
+                .orElseThrow(() -> new ResourceNotFoundException("The user account was not found"));
+            dbAccount.setEmail(newEmail);
+            return repository.save(dbAccount);
+        } catch (DataIntegrityViolationException e) {
+            throw new ResourceConflictException("A user account with that email already exists");
+        }
     }
 
     @Override

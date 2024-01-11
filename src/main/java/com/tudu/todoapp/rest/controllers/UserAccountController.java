@@ -3,6 +3,7 @@ package com.tudu.todoapp.rest.controllers;
 import com.tudu.todoapp.dto.UserAccountDto;
 import com.tudu.todoapp.dto.mappers.UserAccountMapper;
 import com.tudu.todoapp.entities.UserAccount;
+import com.tudu.todoapp.exceptions.ResourceConflictException;
 import com.tudu.todoapp.exceptions.ResourceNotFoundException;
 import com.tudu.todoapp.services.implementations.UserAccountServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -19,11 +20,14 @@ public class UserAccountController {
     private final UserAccountMapper userAccountMapper;
 
     @PostMapping
-    public ResponseEntity<String> createAccount(@RequestBody UserAccountDto userAccountDto) {
-        UserAccount createdAccount = userAccountService.createUserAccount(
-            userAccountMapper.dtoToEntity(userAccountDto));
-
-        return new ResponseEntity<>("api/v1/accounts/" + createdAccount.getAccountId(), HttpStatus.OK);
+    public ResponseEntity<?> createAccount(@RequestBody UserAccountDto userAccountDto) {
+        try {
+            UserAccount createdAccount = userAccountService.createUserAccount(
+                userAccountMapper.dtoToEntity(userAccountDto));
+            return new ResponseEntity<>("api/v1/accounts/" + createdAccount.getAccountId(), HttpStatus.OK);
+        } catch (ResourceConflictException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
     }
 
     @GetMapping("/{id}")
@@ -64,6 +68,8 @@ public class UserAccountController {
             return new ResponseEntity<>(updated, HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (ResourceConflictException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
 

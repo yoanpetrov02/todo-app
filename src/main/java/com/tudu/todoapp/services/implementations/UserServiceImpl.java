@@ -54,6 +54,9 @@ class UserServiceImpl implements UserService {
         if (user.getUserId() != null && userRepository.existsById(user.getUserId())) {
             throw new ResourceConflictException("A user with the same id already exists.");
         }
+        if (user.getDisplayName() != null && userRepository.findUserByDisplayName(user.getDisplayName()).isPresent()) {
+            throw new ResourceConflictException("A user with the same username already exists");
+        }
         return userRepository.save(user);
     }
 

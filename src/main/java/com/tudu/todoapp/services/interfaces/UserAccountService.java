@@ -47,7 +47,7 @@ public interface UserAccountService {
      * @return the updated {@code UserAccount}.
      * @throws ResourceNotFoundException if the account was not found.
      */
-    UserAccount updateEmail(String oldEmail, String newEmail) throws ResourceNotFoundException;
+    UserAccount updateEmail(String oldEmail, String newEmail) throws ResourceNotFoundException, ResourceConflictException;
 
     /**
      * Deletes all user accounts from the database.

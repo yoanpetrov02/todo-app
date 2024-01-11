@@ -1,6 +1,7 @@
 package com.tudu.todoapp.rest.controllers;
 
 import com.tudu.todoapp.entities.User;
+import com.tudu.todoapp.exceptions.ResourceConflictException;
 import com.tudu.todoapp.exceptions.ResourceNotFoundException;
 import com.tudu.todoapp.services.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
@@ -51,28 +52,35 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> createUser(@RequestBody User user) {
-        userService.createUser(user);
-
-        return new ResponseEntity<>("created yea", HttpStatus.OK);
+        try {
+            userService.createUser(user);
+            return new ResponseEntity<>("created yea", HttpStatus.OK);
+        } catch (ResourceConflictException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User newData) {
-        return new ResponseEntity<>(userService.updateUser(id, newData), HttpStatus.OK);
+    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User newData) {
+        try {
+            return new ResponseEntity<>(userService.updateUser(id, newData), HttpStatus.OK);
+        } catch (ResourceNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (ResourceConflictException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
     }
 
     @DeleteMapping
     public ResponseEntity<?> deleteAllUsers() {
         userService.deleteAllUsers();
-
-        return new ResponseEntity<>("All users have been successfully deleted", HttpStatus.OK);
+        return new ResponseEntity<>("All users have been deleted", HttpStatus.OK);
     }
 
    @DeleteMapping("/{id}")
    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         User user = userService.getUserById(id);
         userService.deleteUserById(id);
-
-        return new ResponseEntity<>("User has been successfully deleted", HttpStatus.OK);
+        return new ResponseEntity<>("User has been deleted", HttpStatus.OK);
    }
 }
