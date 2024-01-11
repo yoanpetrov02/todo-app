@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,6 +28,6 @@ public class User {
     @JoinColumn(name = "account_id")
     UserAccount userAccount;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Board> boards;
+    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<Board> boards = new ArrayList<>();
 }

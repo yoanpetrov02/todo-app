@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -30,9 +31,5 @@ public class TodoList {
     private Board board;
 
     @OneToMany(mappedBy = "todoList", cascade = CascadeType.ALL)
-    private List<TodoItem> todoItems;
-
-    public TodoList(String title) {
-        this.title = title;
-    }
+    private List<TodoItem> todoItems = new ArrayList<>();
 }
