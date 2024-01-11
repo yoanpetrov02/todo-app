@@ -1,5 +1,6 @@
 package com.tudu.todoapp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,12 +22,14 @@ public class User {
     @Column(name = "display_name", unique = true)
     private String displayName;
 
+    @JsonIgnore
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id")
     UserAccount userAccount;
 
+    @JsonIgnore
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)

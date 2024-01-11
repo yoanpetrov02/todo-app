@@ -21,11 +21,10 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    // TODO Add validation for pageNumber and itemsPerPage (check how to validate @RequestParam-s)
     @GetMapping
     public ResponseEntity<?> getBoards(
-        @RequestParam Integer pageNumber,
-        @RequestParam Integer itemsPerPage
+        @RequestParam(defaultValue = "1") Integer pageNumber,
+        @RequestParam(defaultValue = "10") Integer itemsPerPage
     ) {
        List<Board> boards = boardService.getBoardsPage(pageNumber, itemsPerPage);
        if (boards.isEmpty()) {
