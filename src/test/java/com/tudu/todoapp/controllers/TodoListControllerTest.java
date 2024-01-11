@@ -29,78 +29,65 @@ class TodoListControllerTest {
     @InjectMocks
     private TodoListController todoListController;
 
-
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
-
     @Test
     void testGetTodoListsPerPage() {
-        // Arrange
         int currentPage = 1;
         int perPage = 10;
         List<TodoList> todoLists = Arrays.asList(new TodoList(), new TodoList());
 
         when(todoListService.getTodoListsPage(currentPage, perPage)).thenReturn(todoLists);
 
-        List<TodoList> actualResult = todoListController.getTodoListsPerPage(currentPage, perPage);
+        List<TodoList> actualResult = (List<TodoList>) todoListController
+            .getTodoListsPerPage(currentPage, perPage).getBody();
         assertEquals(todoLists, actualResult);
     }
 
-
     @Test
     void testGetTodoListById() {
-
         Long todoListId = 1L;
         TodoList todoList = TodoList.builder().title("First").build();
 
         when(todoListService.getTodoListById(todoListId)).thenReturn(todoList);
 
-        TodoList actualResult = todoListController.getTodoListById(todoListId);
+        TodoList actualResult = (TodoList) todoListController.getTodoListById(todoListId).getBody();
         assertEquals(todoList, actualResult);
     }
 
-
     @Test
     void testCreateTodoList() {
-
         TodoList todoList = TodoList.builder().title("First").build();
 
         ResponseEntity<?> actualResult = todoListController.createTodoList(todoList);
         assertEquals(HttpStatus.OK, actualResult.getStatusCode());
     }
 
-
     @Test
     void testUpdateTodoList() {
-
         Long todoListId = 1L;
         TodoList newData = TodoList.builder().title("First").build();
         TodoList updatedTodoList = TodoList.builder().title("Second").build();
 
         when(todoListService.updateTodoList(todoListId, newData)).thenReturn(updatedTodoList);
 
-        ResponseEntity<TodoList> actualResult = todoListController.updateTodoList(todoListId, newData);
-
+        ResponseEntity<TodoList> actualResult = (ResponseEntity<TodoList>) todoListController
+            .updateTodoList(todoListId, newData);
         assertEquals(HttpStatus.OK, actualResult.getStatusCode());
         assertEquals(updatedTodoList, actualResult.getBody());
     }
 
-
     @Test
     void testDeleteAllTodoLists() {
-
         ResponseEntity<?> actualResult = todoListController.deleteAllTodoLists();
-
         assertEquals(HttpStatus.OK, actualResult.getStatusCode());
     }
 
-
     @Test
     void testDeleteTodoListById() {
-
         Long todoListId = 1L;
         TodoList todoList = TodoList.builder().title("First").build();
 
