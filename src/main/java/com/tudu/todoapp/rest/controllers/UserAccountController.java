@@ -3,7 +3,8 @@ package com.tudu.todoapp.rest.controllers;
 import com.tudu.todoapp.dto.UserAccountDto;
 import com.tudu.todoapp.dto.mappers.UserAccountMapper;
 import com.tudu.todoapp.entities.UserAccount;
-import com.tudu.todoapp.services.UserAccountServiceImpl;
+import com.tudu.todoapp.exceptions.ResourceNotFoundException;
+import com.tudu.todoapp.services.implementations.UserAccountServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,30 @@ public class UserAccountController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserAccount> getUserAccountById(@PathVariable Long id) {
+    public ResponseEntity<?> getUserAccountById(@PathVariable Long id) {
+        try {
+            UserAccount userAccount = userAccountService.getUserAccountById(id);
+            return new ResponseEntity<>(userAccount, HttpStatus.OK);
+        } catch (ResourceNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/{email}")
+    public ResponseEntity<?> getUserAccountById(@PathVariable String email) {
+        try {
+            UserAccount userAccount = userAccountService.getUserAccountByEmail(email);
+            return new ResponseEntity<>(userAccount, HttpStatus.OK);
+        } catch (ResourceNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateEmail(
+        @PathVariable Long id,
+        @RequestParam(defaultValue = "unknown") String email
+    ) {
         return null;
     }
 }

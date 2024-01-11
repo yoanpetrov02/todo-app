@@ -14,6 +14,13 @@ public interface UserAccountService {
     UserAccount getUserAccountById(Long userAccountId) throws ResourceNotFoundException;
 
     /**
+     * Returns the user account with that email.
+     *
+     * @throws ResourceNotFoundException if the user account was not found.
+     */
+    UserAccount getUserAccountByEmail(String email) throws ResourceNotFoundException;
+
+    /**
      * Creates the new user account in the database.
      *
      * @param userAccount the user account's information.
