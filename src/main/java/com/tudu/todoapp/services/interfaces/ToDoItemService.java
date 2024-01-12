@@ -25,6 +25,13 @@ public interface ToDoItemService {
     TodoItem getToDoItemById(Long itemId) throws ResourceNotFoundException;
 
     /**
+     * Returns a page containing to do items.
+     *
+     * @throws ResourceNotFoundException if the page was not found.
+     */
+    List<TodoItem> getTodoItemsPage (int pageNumber, int perPage) throws ResourceNotFoundException;
+
+    /**
      * Creates the new board in the database.
      *
      * @param todoItem the to do item's information.
