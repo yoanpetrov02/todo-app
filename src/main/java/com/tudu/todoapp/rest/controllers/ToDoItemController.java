@@ -1,85 +1,69 @@
 package com.tudu.todoapp.rest.controllers;
 
 import com.tudu.todoapp.entities.TodoItem;
-import com.tudu.todoapp.repositories.TodoItemRepository;
+import com.tudu.todoapp.exceptions.ResourceConflictException;
+import com.tudu.todoapp.exceptions.ResourceNotFoundException;
+import com.tudu.todoapp.services.interfaces.ToDoItemService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/todoitems")
 public class ToDoItemController {
 
-    private final TodoItemRepository todoItemRepository;
-
-    @Autowired
-    ToDoItemController(TodoItemRepository todoItemRepository){
-        this.todoItemRepository = todoItemRepository;
-    }
-
-    @GetMapping
-    public ResponseEntity<Page<TodoItem>> getAllToDoItems(
-        @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "10") int size){
-
-        Page<TodoItem> todoItems = todoItemRepository.findAll(PageRequest.of(page, size));
-        return new ResponseEntity<>(todoItems, HttpStatus.OK);
-    }
+    private final ToDoItemService todoItemService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<TodoItem> getToDoItemById(@PathVariable Long id){
-        Optional<TodoItem> todoItem = todoItemRepository.findById(id);
-
-        return todoItem.map(item -> new ResponseEntity<>(item, HttpStatus.OK))
-            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public ResponseEntity<?> getToDoItemById(@PathVariable Long id){
+        try{
+            TodoItem todoItem = todoItemService.getToDoItemById(id);
+            return new ResponseEntity<>(todoItem, HttpStatus.OK);
+        } catch(ResourceNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping
-    public ResponseEntity<TodoItem> createToDoItem(@Valid @RequestBody TodoItem todoItem){
-        TodoItem createdTodoItem = todoItemRepository.save(todoItem);
-        return new ResponseEntity<>(createdTodoItem, HttpStatus.CREATED);
+    public ResponseEntity<?> createToDoItem(@Valid @RequestBody TodoItem todoItem){
+        try{
+            TodoItem newTodoItem = todoItemService.createToDoItem(todoItem);
+            return new ResponseEntity<>(newTodoItem, HttpStatus.OK);
+        } catch (ResourceConflictException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TodoItem> updateToDoItem(
+    public ResponseEntity<?> updateToDoItem(
         @PathVariable Long id,
-        @Valid @RequestBody TodoItem updatedToDoItem
+        @Valid @RequestBody TodoItem newTodoData
     ){
-        Optional<TodoItem> existingToDoItemOptional = todoItemRepository.findById(id);
-        if(existingToDoItemOptional.isPresent()){
-            TodoItem existingToDoItem = existingToDoItemOptional.get();
-            existingToDoItem.setCompleted(updatedToDoItem.getCompleted());
-
-            TodoItem savedTodoItem = todoItemRepository.save(existingToDoItem);
-            return new ResponseEntity<>(savedTodoItem, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        try{
+            TodoItem updatedToDoItem = todoItemService.updateToDoItem(id, newTodoData);
+            return new ResponseEntity<>(updatedToDoItem, HttpStatus.OK);
+        } catch(ResourceNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteToDoItemById(@PathVariable Long id){
-        Optional<TodoItem> todoItemOptional = todoItemRepository.findById(id);
-
-        if(todoItemOptional.isPresent()){
-            todoItemRepository.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> deleteToDoItemById(@PathVariable Long id){
+        try{
+            todoItemService.deleteToDoItemById(id);
+            return new ResponseEntity<>("To do item deletion successful.", HttpStatus.OK);
+        } catch (ResourceNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> deleteAllToDoItems(){
-        todoItemRepository.deleteAll();
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<?> deleteAllToDoItems(){
+        todoItemService.deleteAllToDoItems();
+        return new ResponseEntity<>("Deletion of all items was successful.", HttpStatus.OK);
     }
-
-
 }
