@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component;
 @Component
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface UserAccountMapper {
-    @Mapping(target="UserAccount", source = "UserAccountDTO")
+    @Mapping(target="UserAccount", source = "UserAccountDto")
     UserAccount dtoToEntity(UserAccountDto dto);
 }

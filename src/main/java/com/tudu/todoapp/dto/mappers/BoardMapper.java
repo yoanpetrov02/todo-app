@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component;
 @Component
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface BoardMapper {
-    @Mapping(target="Board", source = "BoardDTO")
+    @Mapping(target="Board", source = "BoardDto")
     Board dtoToEntity(BoardDto boardDto);
 }

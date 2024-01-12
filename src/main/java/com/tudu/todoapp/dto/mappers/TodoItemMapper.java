@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component;
 @Component
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface TodoItemMapper {
-    @Mapping(target="TodoItem", source = "TodoItemDTO")
+    @Mapping(target="TodoItem", source = "TodoItemDto")
     TodoItem dtoToEntity(TodoItemDto todoItemDTO);
 }
