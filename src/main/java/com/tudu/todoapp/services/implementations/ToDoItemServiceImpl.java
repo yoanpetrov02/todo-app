@@ -5,6 +5,8 @@ import com.tudu.todoapp.exceptions.ResourceNotFoundException;
 import com.tudu.todoapp.repositories.TodoItemRepository;
 import com.tudu.todoapp.services.interfaces.ToDoItemService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,7 +34,14 @@ public class ToDoItemServiceImpl implements ToDoItemService {
     }
 
     @Override
-    public TodoItem createToDoItem(TodoItem todoItem) throws ResourceConflictException {
+    public List<TodoItem> getTodoItemsPage(int pageNumber, int perPage){
+        int pageIndex = pageNumber - 1;
+        Pageable page = PageRequest.of(pageIndex, perPage);
+        return todoItemRepository.findAll(page).toList();
+    }
+
+    @Override
+    public TodoItem createToDoItem(TodoItem todoItem){
         if(todoItem.getItemId()!=null && todoItemRepository.existsById(todoItem.getItemId())){
             throw new ResourceConflictException("An item with the same id already exists.");
         }
@@ -40,7 +49,7 @@ public class ToDoItemServiceImpl implements ToDoItemService {
     }
 
     @Override
-    public TodoItem updateToDoItem(Long itemId, TodoItem newTodoItem) throws ResourceNotFoundException {
+    public TodoItem updateToDoItem(Long itemId, TodoItem newTodoItem){
         TodoItem dbTodoItem = todoItemRepository.findById(itemId)
             .orElseThrow(() -> new ResourceNotFoundException("An item with the specified id was not found."));
         dbTodoItem.setCompleted(newTodoItem.getCompleted());
@@ -48,7 +57,7 @@ public class ToDoItemServiceImpl implements ToDoItemService {
     }
 
     @Override
-    public void deleteToDoItemById(Long itemId) throws ResourceNotFoundException {
+    public void deleteToDoItemById(Long itemId){
         if(!todoItemRepository.existsById(itemId)){
             throw new ResourceNotFoundException("An item with the specified id was not found.");
         }
