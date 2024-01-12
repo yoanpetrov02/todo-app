@@ -1,5 +1,7 @@
 package com.tudu.todoapp.rest.controllers;
 
+import com.tudu.todoapp.dto.TodoListDto;
+import com.tudu.todoapp.dto.mappers.TodoListMapper;
 import com.tudu.todoapp.entities.TodoList;
 
 import com.tudu.todoapp.exceptions.ResourceConflictException;
@@ -18,6 +20,7 @@ import java.util.List;
 public class TodoListController {
 
     private final TodoListServiceImpl todoListService;
+    private final TodoListMapper todoListMapper;
 
     @GetMapping
     public ResponseEntity<?> getTodoListsPerPage(
@@ -42,9 +45,11 @@ public class TodoListController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createTodoList(@RequestBody TodoList todoList) {
+    public ResponseEntity<?> createTodoList(@RequestBody TodoListDto todoListDto) {
         try {
-            TodoList created = todoListService.createTodoList(todoList);
+            TodoList created = todoListService.createTodoList(
+                todoListMapper.dtoToEntity(todoListDto)
+            );
             return new ResponseEntity<>(created, HttpStatus.CREATED);
         } catch (ResourceConflictException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
@@ -52,9 +57,10 @@ public class TodoListController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateTodoList(@PathVariable Long id, @RequestBody TodoList newData) {
+    public ResponseEntity<?> updateTodoList(@PathVariable Long id, @RequestBody TodoListDto newData) {
         try {
-            TodoList updated = todoListService.updateTodoList(id, newData);
+            TodoList updated = todoListService.updateTodoList(id,
+                todoListMapper.dtoToEntity(newData));
             return new ResponseEntity<>(updated, HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
