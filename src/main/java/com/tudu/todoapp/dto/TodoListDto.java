@@ -1,6 +1,6 @@
 package com.tudu.todoapp.dto;
 
-import com.tudu.todoapp.entities.TodoList;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,7 +10,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TodoItemDTO {
+public class TodoListDto {
 
-    private Boolean completed;
+    @NotBlank
+    private String title;
+    @NotBlank
+    private String description;
 }

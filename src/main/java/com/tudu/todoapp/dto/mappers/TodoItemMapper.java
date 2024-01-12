@@ -1,6 +1,6 @@
 package com.tudu.todoapp.dto.mappers;
 
-import com.tudu.todoapp.dto.TodoItemDTO;
+import com.tudu.todoapp.dto.TodoItemDto;
 import com.tudu.todoapp.entities.TodoItem;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -11,5 +11,5 @@ import org.springframework.stereotype.Component;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface TodoItemMapper {
     @Mapping(target="TodoItem", source = "TodoItemDTO")
-    TodoItem dtoToEntity(TodoItemDTO todoItemDTO);
+    TodoItem dtoToEntity(TodoItemDto todoItemDTO);
 }
