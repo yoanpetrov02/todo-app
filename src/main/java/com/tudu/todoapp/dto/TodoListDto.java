@@ -1,6 +1,5 @@
 package com.tudu.todoapp.dto;
 
-import com.tudu.todoapp.security.Role;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,11 +10,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserAccountDto {
+public class TodoListDto {
 
     @NotBlank
-    private String email;
+    private String title;
     @NotBlank
-    private String password;
-    private Role role;
+    private String description;
 }

@@ -1,5 +1,7 @@
 package com.tudu.todoapp.rest.controllers;
 
+import com.tudu.todoapp.dto.TodoItemDto;
+import com.tudu.todoapp.dto.mappers.TodoItemMapper;
 import com.tudu.todoapp.entities.TodoItem;
 import com.tudu.todoapp.exceptions.ResourceConflictException;
 import com.tudu.todoapp.exceptions.ResourceNotFoundException;
@@ -9,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 
@@ -19,6 +20,7 @@ import java.util.List;
 public class ToDoItemController {
 
     private final ToDoItemService todoItemService;
+    private final TodoItemMapper todoItemMapper;
 
     @GetMapping
     public ResponseEntity<?> getTodoItemsPage(
@@ -43,9 +45,11 @@ public class ToDoItemController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createToDoItem(@Valid @RequestBody TodoItem todoItem){
+    public ResponseEntity<?> createToDoItem(@Valid @RequestBody TodoItemDto todoItemDto){
         try{
-            TodoItem newTodoItem = todoItemService.createToDoItem(todoItem);
+            TodoItem newTodoItem = todoItemService.createToDoItem(
+                todoItemMapper.dtoToEntity(todoItemDto)
+            );
             return new ResponseEntity<>(newTodoItem, HttpStatus.OK);
         } catch (ResourceConflictException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
@@ -55,10 +59,12 @@ public class ToDoItemController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateToDoItem(
         @PathVariable Long id,
-        @Valid @RequestBody TodoItem newTodoData
+        @Valid @RequestBody TodoItemDto newTodoData
     ){
         try{
-            TodoItem updatedToDoItem = todoItemService.updateToDoItem(id, newTodoData);
+            TodoItem updatedToDoItem = todoItemService.updateToDoItem(id,
+                todoItemMapper.dtoToEntity(newTodoData));
+
             return new ResponseEntity<>(updatedToDoItem, HttpStatus.OK);
         } catch(ResourceNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);

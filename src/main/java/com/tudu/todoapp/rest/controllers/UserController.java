@@ -1,5 +1,7 @@
 package com.tudu.todoapp.rest.controllers;
 
+import com.tudu.todoapp.dto.UserDto;
+import com.tudu.todoapp.dto.mappers.UserMapper;
 import com.tudu.todoapp.entities.User;
 import com.tudu.todoapp.exceptions.ResourceConflictException;
 import com.tudu.todoapp.exceptions.ResourceNotFoundException;
@@ -17,6 +19,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final UserMapper userMapper;
 
     @GetMapping
     public ResponseEntity<?> getUsers(
@@ -51,7 +54,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createUser(@RequestBody User user) {
+    public ResponseEntity<?> createUser(@RequestBody UserDto createdUser) {
+        User user = userMapper.dtoToEntity(createdUser);
         try {
             userService.createUser(user);
             return new ResponseEntity<>("created yea", HttpStatus.OK);
@@ -61,9 +65,10 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User newData) {
+    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody UserDto newData) {
+        User newUserData = userMapper.dtoToEntity(newData);
         try {
-            return new ResponseEntity<>(userService.updateUser(id, newData), HttpStatus.OK);
+            return new ResponseEntity<>(userService.updateUser(id, newUserData), HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (ResourceConflictException e) {

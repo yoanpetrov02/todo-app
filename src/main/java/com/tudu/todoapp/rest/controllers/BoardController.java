@@ -1,5 +1,7 @@
 package com.tudu.todoapp.rest.controllers;
 
+import com.tudu.todoapp.dto.BoardDto;
+import com.tudu.todoapp.dto.mappers.BoardMapper;
 import com.tudu.todoapp.entities.Board;
 import com.tudu.todoapp.exceptions.ResourceConflictException;
 import com.tudu.todoapp.exceptions.ResourceNotFoundException;
@@ -20,6 +22,7 @@ import java.util.List;
 public class BoardController {
 
     private final BoardService boardService;
+    private final BoardMapper boardMapper;
 
     @GetMapping
     public ResponseEntity<?> getBoards(
@@ -44,9 +47,9 @@ public class BoardController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createBoard(@RequestBody Board board) {
+    public ResponseEntity<?> createBoard(@RequestBody BoardDto boardDto) {
         try {
-            Board created = boardService.createBoard(board);
+            Board created = boardService.createBoard(boardMapper.dtoToEntity(boardDto));
             return new ResponseEntity<>(created, HttpStatus.CREATED);
         } catch (ResourceConflictException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
