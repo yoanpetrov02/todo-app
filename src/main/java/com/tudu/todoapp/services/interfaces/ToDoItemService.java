@@ -29,7 +29,7 @@ public interface ToDoItemService {
      *
      * @throws ResourceNotFoundException if the page was not found.
      */
-    List<TodoItem> getTodoItemsPage (int pageNumber, int perPage) throws ResourceNotFoundException;
+    List<TodoItem> getTodoItemsPage(int pageNumber, int perPage);
 
     /**
      * Creates the new board in the database.

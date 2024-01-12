@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RequiredArgsConstructor
 @RestController
@@ -17,6 +19,18 @@ import org.springframework.web.bind.annotation.*;
 public class ToDoItemController {
 
     private final ToDoItemService todoItemService;
+
+    @GetMapping
+    public ResponseEntity<?> getTodoItemsPage(
+        @RequestParam(defaultValue = "1") Integer pageNumber,
+        @RequestParam(defaultValue = "10") Integer perPage
+    ) {
+        List<TodoItem> todoItems = todoItemService.getTodoItemsPage(pageNumber, perPage);
+        if(todoItems.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        return new ResponseEntity<>(todoItems, HttpStatus.OK);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getToDoItemById(@PathVariable Long id){
